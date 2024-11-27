@@ -4,13 +4,13 @@
 
     <!-- Translate Animation -->
     <translate
-        android:duration="1500"
-        android:fromYDelta="-100%"
+        android:duration="2000"
+        android:fromYDelta="-200%"
         android:toYDelta="0%" />
 
     <!-- Scale Animation -->
     <scale
-        android:duration="1500"
+        android:duration="2000"
         android:fromXScale="0.5"
         android:toXScale="1.0"
         android:fromYScale="0.5"
