@@ -6,7 +6,7 @@
     android:background="@color/white">
 
     <ImageView
-        android:id="@+id/logo"
+        android:id="@+id/ivLogo"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:src="@drawable/logo"
