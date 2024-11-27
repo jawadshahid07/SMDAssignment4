@@ -32,10 +32,11 @@ public class ShoppingListAdapter extends FirebaseRecyclerAdapter<Item, ShoppingL
         holder.itemView.findViewById(R.id.deleteButton).setOnClickListener(v -> {
             String itemId = getRef(position).getKey(); // Get the item's ID
             if (itemId != null) {
-                // Delete the item from Firebase
-                DatabaseReference itemRef = FirebaseDatabase.getInstance().getReference("users")
-                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                        .child("items").child(itemId);
+                // Correct the Firebase path to "Users/{userId}/ShoppingItems"
+                DatabaseReference itemRef = FirebaseDatabase.getInstance().getReference("Users")
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid()) // Current user
+                        .child("ShoppingItems") // Correct path for shopping items
+                        .child(itemId); // Item ID to be deleted
 
                 itemRef.removeValue()
                         .addOnSuccessListener(aVoid -> {
