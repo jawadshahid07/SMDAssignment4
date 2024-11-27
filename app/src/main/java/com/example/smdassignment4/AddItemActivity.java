@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -31,8 +32,12 @@ public class AddItemActivity extends AppCompatActivity {
         priceField = findViewById(R.id.etPrice);
         addItemButton = findViewById(R.id.btnAddItem);
 
-        // Initialize Firebase Database reference
-        databaseReference = FirebaseDatabase.getInstance().getReference("items");
+        // Initialize FirebaseAuth instance to get the current user's ID
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        String userId = auth.getCurrentUser().getUid();  // Get current user's ID
+
+        // Initialize Firebase Database reference specific to this user's shopping list
+        databaseReference = FirebaseDatabase.getInstance().getReference("users").child(userId).child("items");
 
         // Add Item Button Click Listener
         addItemButton.setOnClickListener(view -> {
@@ -62,7 +67,7 @@ public class AddItemActivity extends AppCompatActivity {
             // Create an Item object
             Item item = new Item(itemName, quantity, price);
 
-            // Store the item in Firebase Realtime Database
+            // Store the item under the authenticated user's node in Firebase Realtime Database
             if (itemId != null) {
                 databaseReference.child(itemId).setValue(item)
                         .addOnCompleteListener(task -> {
